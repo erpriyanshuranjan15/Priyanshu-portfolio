@@ -1116,6 +1116,254 @@
     margin-left: 0.5rem;
     vertical-align: middle;
   }
+
+  /* === 3D NAVIGATION ARROWS === */
+  .nav-3d-controls {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 2rem;
+    display: flex;
+    gap: 0.75rem;
+    z-index: 990;
+    align-items: center;
+  }
+
+  .nav-3d-btn {
+    width: 48px;
+    height: 48px;
+    background: rgba(8,10,14,0.75);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(12px);
+    transition: all 0.25s;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+    transform-style: preserve-3d;
+    position: relative;
+    user-select: none;
+  }
+
+  .nav-3d-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(108,99,255,0.15) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.25s;
+    pointer-events: none;
+  }
+
+  .nav-3d-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: perspective(400px) rotateY(12deg) translateZ(4px);
+    box-shadow: 0 6px 24px rgba(108,99,255,0.35), inset 0 0 10px rgba(108,99,255,0.08);
+  }
+
+  .nav-3d-btn:hover::before { opacity: 1; }
+  .nav-3d-btn:active { transform: perspective(400px) rotateY(4deg) translateZ(1px) scale(0.95); }
+
+  .nav-3d-btn.left-btn:hover { transform: perspective(400px) rotateY(-12deg) translateZ(4px); }
+
+  .nav-3d-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    opacity: 0.7;
+  }
+
+  .nav-3d-controls-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    align-items: center;
+  }
+
+  .nav-3d-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  /* === 3D TEXT REVEAL CARD === */
+  .reveal-card-container {
+    perspective: 1000px;
+    margin-top: 1.5rem;
+    display: inline-block;
+  }
+
+  .reveal-card {
+    width: 100%;
+    max-width: 480px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.85s cubic-bezier(0.23, 1, 0.32, 1);
+    height: auto;
+    min-height: 56px;
+  }
+
+  .reveal-card.flipped {
+    transform: rotateX(360deg);
+  }
+
+  .reveal-card-front,
+  .reveal-card-back {
+    position: relative;
+    backface-visibility: hidden;
+    width: 100%;
+  }
+
+  .reveal-card-front {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .reveal-card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transform: rotateX(180deg);
+    transition: opacity 0.3s ease 0.4s;
+  }
+
+  .reveal-card.flipped .reveal-card-front {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .reveal-card.flipped .reveal-card-back {
+    opacity: 1;
+    pointer-events: all;
+    position: relative;
+    transform: none;
+  }
+
+  .reveal-text-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.5rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.75;
+    font-weight: 300;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reveal-text-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(108,99,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .reveal-text-box .reveal-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .reveal-text-box p {
+    margin: 0;
+  }
+
+  .reveal-text-box strong { color: var(--text); font-weight: 500; }
+
+  .btn-reveal {
+    padding: 0.75rem 1.8rem;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid rgba(108,99,255,0.5);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    transform-style: preserve-3d;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+
+  .btn-reveal::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(108,99,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn-reveal:hover {
+    background: rgba(108,99,255,0.1);
+    border-color: var(--accent);
+    transform: translateY(-3px) perspective(500px) rotateX(8deg);
+    box-shadow: 0 10px 30px rgba(108,99,255,0.3), 0 0 40px rgba(108,99,255,0.1);
+  }
+
+  .btn-reveal:hover::before { left: 100%; }
+
+  .btn-reveal-icon {
+    display: inline-block;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .btn-reveal:hover .btn-reveal-icon {
+    transform: rotateY(180deg);
+  }
+
+  .btn-reveal-reset {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 0.4rem 0;
+    transition: color 0.2s;
+    margin-top: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .btn-reveal-reset:hover { color: var(--accent); }
+
+  @keyframes reveal-glow {
+    0% { box-shadow: 0 0 0px rgba(108,99,255,0); }
+    50% { box-shadow: 0 0 40px rgba(108,99,255,0.5), 0 0 80px rgba(108,99,255,0.2); }
+    100% { box-shadow: 0 0 0px rgba(108,99,255,0); }
+  }
+
+  .reveal-card.flipped .reveal-text-box {
+    animation: reveal-glow 1.2s ease-out forwards;
+  }
 </style>
 </head>
 <body>
@@ -1123,6 +1371,17 @@
 <canvas id="three-canvas"></canvas>
 <div class="bg-grid"></div>
 <div class="cursor-glow" id="cursor"></div>
+
+<!-- 3D NAVIGATION CONTROLS -->
+<div class="nav-3d-controls">
+  <div class="nav-3d-controls-inner">
+    <div class="nav-3d-row">
+      <button class="nav-3d-btn left-btn" id="btn3dLeft" title="Move Left (←)">&#9664;</button>
+      <button class="nav-3d-btn" id="btn3dRight" title="Move Right (→)">&#9654;</button>
+    </div>
+    <span class="nav-3d-label">3D View</span>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav style="position:relative;">
@@ -1149,6 +1408,26 @@
       Crafting elegant digital solutions at the intersection of design and technology. 
       Passionate about building products that make a meaningful difference.
     </p>
+
+    <!-- 3D REVEAL CARD -->
+    <div class="reveal-card-container">
+      <div class="reveal-card" id="revealCard">
+        <div class="reveal-card-front">
+          <button class="btn-reveal" id="btnReveal">
+            <span class="btn-reveal-icon">✦</span>
+            Reveal My Story
+          </button>
+        </div>
+        <div class="reveal-card-back">
+          <div class="reveal-text-box">
+            <span class="reveal-tag">// About Priyanshu</span>
+            <p>I'm a <strong>Full-Stack Developer</strong> who loves building from idea to deployment — crafting pixel-perfect UIs, scalable APIs, and everything in between. <strong>DSA enthusiast</strong>, open-source contributor, and relentless problem solver.</p>
+          </div>
+          <button class="btn-reveal-reset" id="btnRevealReset">↩ Hide</button>
+        </div>
+      </div>
+    </div>
+
     <div class="hero-cta">
       <a href="#projects" class="btn-primary">View Projects</a>
       <a href="#contact" class="btn-outline">Get in Touch</a>
@@ -2022,6 +2301,44 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
+    // ---- LEFT / RIGHT 3D CAMERA CONTROLS ----
+    let camOffsetX = 0, camTargetOffsetX = 0;
+    const CAM_STEP = 7;
+    const CAM_MAX  = 22;
+
+    function nudgeLeft()  { camTargetOffsetX = Math.max(camTargetOffsetX - CAM_STEP, -CAM_MAX); flashBtn('btn3dLeft');  }
+    function nudgeRight() { camTargetOffsetX = Math.min(camTargetOffsetX + CAM_STEP,  CAM_MAX); flashBtn('btn3dRight'); }
+
+    function flashBtn(id) {
+      const btn = document.getElementById(id);
+      if (!btn) return;
+      btn.style.borderColor = 'var(--accent)';
+      btn.style.color = '#fff';
+      btn.style.boxShadow = '0 0 20px rgba(108,99,255,0.6)';
+      setTimeout(() => {
+        btn.style.borderColor = '';
+        btn.style.color = '';
+        btn.style.boxShadow = '';
+      }, 300);
+    }
+
+    document.getElementById('btn3dLeft') .addEventListener('click', nudgeLeft);
+    document.getElementById('btn3dRight').addEventListener('click', nudgeRight);
+
+    // Keyboard arrow support
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft')  nudgeLeft();
+      if (e.key === 'ArrowRight') nudgeRight();
+    });
+
+    // Touch swipe support
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    document.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) dx < 0 ? nudgeRight() : nudgeLeft();
+    }, { passive: true });
+
     // ---- ANIMATE ----
     const clock = new THREE.Clock();
     function animate() {
@@ -2067,7 +2384,8 @@
       });
 
       // Camera parallax
-      camera.position.x += (mouseX * 5  - camera.position.x) * 0.04;
+      camOffsetX += (camTargetOffsetX - camOffsetX) * 0.04;
+      camera.position.x += ((mouseX * 5 + camOffsetX) - camera.position.x) * 0.04;
       camera.position.y += (-mouseY * 3.5 - camera.position.y) * 0.04;
 
       // Scroll drift
@@ -2190,7 +2508,58 @@
     });
   })();
 
-  // Cursor glow
+  // =============================================
+  // 3D REVEAL BUTTON
+  // =============================================
+  (function initRevealCard() {
+    const card    = document.getElementById('revealCard');
+    const btnShow = document.getElementById('btnReveal');
+    const btnHide = document.getElementById('btnRevealReset');
+    if (!card || !btnShow || !btnHide) return;
+
+    btnShow.addEventListener('click', () => {
+      card.classList.add('flipped');
+      // Spawn burst particles from btn
+      const rect = btnShow.getBoundingClientRect();
+      spawnBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    });
+
+    btnHide.addEventListener('click', () => {
+      card.classList.remove('flipped');
+    });
+
+    function spawnBurst(cx, cy) {
+      const colors = ['#6c63ff','#ff6b6b','#f0c060','#44ddff','#fff'];
+      for (let i = 0; i < 22; i++) {
+        const dot = document.createElement('div');
+        const angle = (i / 22) * Math.PI * 2;
+        const dist  = 40 + Math.random() * 60;
+        const size  = 3 + Math.random() * 5;
+        Object.assign(dot.style, {
+          position: 'fixed',
+          left: cx + 'px',
+          top:  cy + 'px',
+          width:  size + 'px',
+          height: size + 'px',
+          borderRadius: Math.random() > 0.5 ? '50%' : '0',
+          background: colors[Math.floor(Math.random() * colors.length)],
+          pointerEvents: 'none',
+          zIndex: 9999,
+          boxShadow: '0 0 8px currentColor',
+          transition: 'transform 0.7s cubic-bezier(0.23,1,0.32,1), opacity 0.7s ease',
+          opacity: 1,
+        });
+        document.body.appendChild(dot);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            dot.style.transform = `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) rotate(${Math.random()*360}deg) scale(0.2)`;
+            dot.style.opacity = '0';
+          });
+        });
+        setTimeout(() => dot.remove(), 750);
+      }
+    }
+  })();
   const cursor = document.getElementById('cursor');
   document.addEventListener('mousemove', (e) => {
     cursor.style.left = e.clientX + 'px';
